@@ -96,10 +96,125 @@ public class Main {
         System.out.println(hashMap.get("Two")); // Output: null
         System.out.println(hashMap); // Output: {One=1, Three=3}
 
-        // *********** TreeSet ***********
-        // Complexity O(log n) for add, remove, and contains
-        System.out.println("TreeSet");
-        Set<String> treeSet = new TreeSet<>();
+        // *********** Stream ***********
+        System.out.println("Stream");
+        List<Integer> numbers = List.of(4, 1, 8, 2, 5);
 
+        // Filtering and Sorting using Stream API
+        numbers.stream()
+                .filter(n -> n % 2 == 0)
+                .sorted()
+                .forEach(System.out::println);
+
+        // Map
+        System.out.println("Map");
+        numbers.stream()
+                .map(n -> n * 2)
+                .sorted()
+                .forEach(System.out::println);
+
+        // flatMap
+        System.out.println("flatMap");
+        List<List<Integer>> listOfLists = List.of(
+                List.of(1, 2, 3),
+                List.of(4, 5, 6),
+                List.of(7, 8, 9)
+        );
+        listOfLists.stream()
+                .flatMap(List::stream)
+                .filter(n -> n % 2 == 0)
+                .sorted()
+                .forEach(System.out::println);
+
+        // flatMap with nested lists
+        System.out.println("flatMap with nested lists");
+        List<List<List<Integer>>> listOfListsOfLists = List.of(
+                List.of(List.of(1, 2), List.of(3, 4)),
+                List.of(List.of(5, 6), List.of(7, 8))
+        );
+
+        listOfListsOfLists.stream()
+                .flatMap(List::stream)
+                .flatMap(List::stream)
+                .filter(n -> n % 2 == 0)
+                .sorted()
+                .forEach(System.out::println);
+
+        // Distinct
+        System.out.println("Distinct");
+        List<Integer> numbersWithDuplicates = List.of(1, 2, 2, 3, 4, 4, 5);
+        numbersWithDuplicates.stream()
+                .distinct()
+                .sorted()
+                .forEach(System.out::println);
+
+        // Peek
+        System.out.println("Peek");
+        List<Integer> numbersToPeek = List.of(1, 2, 3, 4, 5);
+        numbersToPeek.stream()
+                .peek(n -> System.out.println("Processing: " + n))
+                .filter(n -> n % 2 == 0)
+                .peek(n -> System.out.println("Transformed: " + n))
+                .sorted()
+                .forEach(System.out::println);
+
+        // Reduce
+        System.out.println("Reduce");
+        List<Integer> numbersToReduce = List.of(1, 2, 3, 4, 5);
+        int sum = numbersToReduce.stream()
+                .reduce(0, Integer::sum);
+        // Print reduce value
+        System.out.println("Sum: " + sum);
+
+        // anyMatch
+        System.out.println("anyMatch");
+        List<Integer> numbersToMatch = List.of(1, 2, 3, 4, 5);
+        boolean anyMatch = numbersToMatch.stream()
+                .anyMatch(n -> n > 3);
+        System.out.println("Any match > 3: " + anyMatch); // Output: true
+
+        // allMatch
+        System.out.println("allMatch");
+        List<Integer> numbersToAllMatch = List.of(1, 2, 3, 4, 5);
+        boolean allMatch = numbersToAllMatch.stream()
+                .allMatch(n -> n > 0);
+        System.out.println("All match > 0: " + allMatch); // Output: true
+
+        // noneMatch
+        System.out.println("noneMatch");
+        List<Integer> numbersToNoneMatch = List.of(1, 2, 3, 4, 5);
+        boolean noneMatch = numbersToNoneMatch.stream()
+                .noneMatch(n -> n < 0);
+        System.out.println("None match < 0: " + noneMatch); // Output: true
+
+        // findFirst
+        System.out.println("findFirst");
+        List<Integer> numbersToFindFirst = List.of(1, 2, 3, 4, 5);
+        Optional<Integer> first = numbersToFindFirst.stream()
+                .filter(n -> n > 3)
+                .findFirst();
+        System.out.println("First match > 3: " + first.orElse(-1)); // Output: 4
+
+        // findAny
+        System.out.println("findAny");
+        List<Integer> numbersToFindAny = List.of(1, 2, 3, 4, 5);
+        Optional<Integer> any = numbersToFindAny.stream()
+                .filter(n -> n > 3)
+                .findAny();
+        System.out.println("find any > 3: " + any.orElse(-1)); // Output: 4
+
+        // Max
+        System.out.println("Max");
+        List<Integer> numbersToMax = List.of(1, 2, 3, 4, 5);
+        Optional<Integer> max = numbersToMax.stream()
+                .max(Integer::compareTo);
+        System.out.println("Max: " + max.orElse(-1)); // Output: 5
+
+        // Min
+        System.out.println("Min");
+        List<Integer> numbersToMin = List.of(1, 2, 3, 4, 5);
+        Optional<Integer> min = numbersToMin.stream()
+                .min(Integer::compareTo);
+        System.out.println("Min: " + min.orElse(-1)); // Output: 1
     }
 }
